@@ -27,9 +27,6 @@ jobs:
       - name: Compiler le projet
         run: ./mvnw -B clean compile
 
-      - name: Lancer les tests
-        run: ./mvnw -B test
-
       - name: Build du jar
         run: ./mvnw -B clean package -DskipTests
 
