@@ -1,32 +1,41 @@
 package com.example.familia.Personne;
 
-import org.springframework.stereotype.Service;
-import com.example.familia.Personne.Personne;
-import com.example.familia.Personne.PersonneRepository;
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-
 public class PersonneService {
+
     private final PersonneRepository personneRepository;
 
-    public List<Personne> getAllPersonnes(){
+    public List<Personne> getAllPersonnes() {
         return personneRepository.findAll();
     }
 
-    public Personne getPersonneById(Long id){
+    public Personne getPersonneById(Long id) {
         return personneRepository.findById(id).orElse(null);
     }
-    
-    public Personne createPersonne(Personne personne){
+
+    public Personne requirePersonneById(Long id) {
+        Personne p = getPersonneById(id);
+        if (p == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Personne introuvable");
+        }
+        return p;
+    }
+
+    public Personne createPersonne(Personne personne) {
         return personneRepository.save(personne);
     }
 
-    public Personne updatePersonne(Long id, Personne data){
-        Personne personne = getPersonneById(id);
-
+    public Personne updatePersonne(Long id, Personne data) {
+        Personne personne = requirePersonneById(id);
         personne.setPrenom(data.getPrenom());
         personne.setDateNaissance(data.getDateNaissance());
         personne.setLieuDeNaissance(data.getLieuDeNaissance());
@@ -41,11 +50,10 @@ public class PersonneService {
         personne.setDescriptionMetier(data.getDescriptionMetier());
         personne.setAdresse(data.getAdresse());
         personne.setFamille(data.getFamille());
-
         return personneRepository.save(personne);
     }
 
-    public void deletePersonne(Long id){
+    public void deletePersonne(Long id) {
         personneRepository.deleteById(id);
     }
 }

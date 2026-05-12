@@ -2,7 +2,7 @@ package com.example.familia.Commentaire;
 
 import lombok.*;
 import jakarta.persistence.*;
-import com.example.familia.User.User;
+import com.example.familia.AppUser.AppUser;
 import com.example.familia.Famille.Famille;
 
 @Entity
@@ -26,6 +26,10 @@ public class Commentaire {
 
     @ManyToOne
     @JoinColumn(name="id_user")
-    private User user;
+    private AppUser user;
+
+
 
 }
+
+

@@ -1,8 +1,6 @@
 package com.example.familia.Commentaire;
 
 import org.springframework.stereotype.Service;
-import com.example.familia.Commentaire.Commentaire;
-import com.example.familia.Commentaire.CommentaireRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 

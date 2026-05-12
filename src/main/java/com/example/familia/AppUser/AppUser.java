@@ -1,9 +1,11 @@
-package com.example.familia.User;
+package com.example.familia.AppUser;
 
-import lombok.*;
 import jakarta.persistence.*;
-import com.example.familia.User.User;
 import com.example.familia.Personne.Personne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +13,7 @@ import com.example.familia.Personne.Personne;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -23,11 +25,14 @@ public class User {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "password")
     private String password;
 
     @Column(name = "is_active")
-    private Integer isActive;
+    private boolean isActive = false;
 
     @OneToOne
     @JoinColumn(name = "id_personne")

@@ -1,12 +1,12 @@
 package com.example.familia.Personne;
 
-import lombok.*;
-import jakarta.persistence.*;
-import java.util.Set;
-import java.util.HashSet;
-import java.time.LocalDate;
 import com.example.familia.Famille.Famille;
 import com.example.familia.Interet.Interet;
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "personne")
@@ -48,10 +48,10 @@ public class Personne {
     @Column(name = "metier")
     private String metier;
 
-    @Column(name="parrain_1")
+    @Column(name = "parrain_1")
     private String parrain1;
 
-    @Column(name="parrain_2")
+    @Column(name = "parrain_2")
     private String parrain2;
 
     @Column(name = "description_metier")
@@ -64,12 +64,17 @@ public class Personne {
     @JoinColumn(name = "id_famille")
     private Famille famille;
 
-
     @ManyToMany
     @JoinTable(
-    name = "interets_personne",
-    joinColumns = @JoinColumn(name = "id_personne"),
-    inverseJoinColumns = @JoinColumn(name = "id_interet"))
+            name = "interets_personne",
+            joinColumns = @JoinColumn(name = "id_personne"),
+            inverseJoinColumns = @JoinColumn(name = "id_interet"))
     private Set<Interet> interets = new HashSet<>();
-}
 
+    public String getPhoto() {
+        if (photo != null && !photo.isBlank()) {
+            return photo;
+        }
+        return DefaultAvatarUrl.forSexe(sexe);
+    }
+}

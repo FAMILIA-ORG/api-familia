@@ -2,8 +2,6 @@ package com.example.familia.Commentaire;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.example.familia.Commentaire.Commentaire;
-import com.example.familia.Commentaire.CommentaireService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -38,3 +36,4 @@ public class CommentaireController {
     }
 
 }
+

@@ -1,0 +1,35 @@
+name: Familia Backend CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Installer Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Donner les droits au wrapper Maven
+        run: chmod +x mvnw
+
+      - name: Compiler le projet
+        run: ./mvnw -B clean compile
+
+      - name: Lancer les tests
+        run: ./mvnw -B test
+
+      - name: Build du jar
+        run: ./mvnw -B clean package -DskipTests
+
