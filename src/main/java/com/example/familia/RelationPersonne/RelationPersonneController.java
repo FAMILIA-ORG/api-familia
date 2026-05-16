@@ -2,8 +2,7 @@ package com.example.familia.RelationPersonne;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.example.familia.RelationPersonne.RelationPersonne;
-import com.example.familia.RelationPersonne.RelationPersonneService;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController

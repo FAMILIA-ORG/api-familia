@@ -65,7 +65,7 @@ public class AuthService {
                 null);
         verificationTokenRepository.save(vt);
 
-        String activationLink = baseUrl + "/api/auth/activation?token=" + token;
+        String activationLink = baseUrl + "/activation?token=" + token;
         mailService.send(
                 user.getEmail(),
                 "Activation de votre compte",

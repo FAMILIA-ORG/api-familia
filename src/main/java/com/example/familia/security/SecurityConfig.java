@@ -35,20 +35,25 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/auth/register",
-                                "/api/auth/login",
-                                "/api/auth/activate",
-                                "/api/auth/forgot-password",
-                                "/api/auth/reset-password",
-                                "/v3/api-docs/**",
-                                "/swagger-ui/**",
-                                "/swagger-ui.html"
+                            "/api/auth/register",
+                            "/api/auth/login",
+                            "/api/auth/activate",
+                            "/api/auth/forgot-password",
+                            "/api/auth/reset-password",
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html"
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/avatars/**").permitAll()
+                    
                         .requestMatchers("/api/auth/me").authenticated()
-                        .requestMatchers("/api/**").hasRole("ADMIN")
+                    
+                        .requestMatchers(HttpMethod.GET, "/avatars/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
+                    
+                        .requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")
+                    
                         .anyRequest().authenticated()
-                )
+                    )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

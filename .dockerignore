@@ -1,0 +1,17 @@
+target/
+.git/
+.gitignore
+.DS_Store
+.env.local
+*.log
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.iml
+node_modules/
+.npm/
+dist/
+build/
+.gradle/

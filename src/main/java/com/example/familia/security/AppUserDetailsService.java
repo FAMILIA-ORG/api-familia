@@ -25,7 +25,7 @@ public class AppUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Utilisateur introuvable"));
 
         String role = (user.getRole() == null || user.getRole().isBlank())
-                ? "USER"
+                ? "ADMIN"
                 : user.getRole().trim().toUpperCase();
         return User.builder()
                 .username(user.getEmail())
