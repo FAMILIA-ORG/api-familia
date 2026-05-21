@@ -23,13 +23,13 @@ public class RelationPersonneController {
     }
 
     @PostMapping
-    public RelationPersonne createRelationPersonne(@RequestBody RelationPersonne relation){
-        return relationPersonneService.createRelationPersonne(relation);
+    public RelationPersonne createRelationPersonne(@RequestBody RelationRequest request){
+        return relationPersonneService.createRelationPersonne(request);
     }
 
     @PutMapping("/{id}")
-    public RelationPersonne updateRelationPersonne(@PathVariable Long id, @RequestBody RelationPersonne relation){
-        return relationPersonneService.updateRelationPersonne(id, relation);
+    public RelationPersonne updateRelationPersonne(@PathVariable Long id, @RequestBody RelationRequest request){
+        return relationPersonneService.updateRelationPersonne(id, request);
     }
 
     @DeleteMapping("/{id}")

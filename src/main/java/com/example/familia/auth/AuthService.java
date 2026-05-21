@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.familia.AppUser.AppUser;
 import com.example.familia.AppUser.AppUserRepository;
+import com.example.familia.Personne.Personne;
+import com.example.familia.Personne.PersonneRepository;
 import com.example.familia.auth.dto.LoginRequest;
 import com.example.familia.auth.dto.RegisterRequest;
 import com.example.familia.auth.token.VerificationToken;
@@ -27,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
     private final AppUserRepository appUserRepository;
+    private final PersonneRepository personneRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
@@ -48,12 +51,17 @@ public class AuthService {
             throw new IllegalArgumentException("Email déjà utilisé");
         }
 
+        Personne personne = new Personne();
+        personne.setPrenom(req.getUsername());
+        personne = personneRepository.save(personne);
+
         AppUser user = new AppUser();
         user.setEmail(req.getEmail().trim().toLowerCase());
         user.setUsername(req.getUsername());
         user.setRole("USER");
         user.setPassword(passwordEncoder.encode(req.getPassword()));
         user.setActive(false);
+        user.setPersonne(personne);
         user = appUserRepository.save(user);
 
         String token = UUID.randomUUID().toString().replace("-", "");

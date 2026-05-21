@@ -21,6 +21,9 @@ public class Personne {
     @Column(name = "id_personne")
     private Long idPersonne;
 
+    @Column(name = "nom")
+    private String nom;
+
     @Column(name = "prenom")
     private String prenom;
 
@@ -48,17 +51,17 @@ public class Personne {
     @Column(name = "metier")
     private String metier;
 
-    @Column(name = "parrain_1")
-    private String parrain1;
-
-    @Column(name = "parrain_2")
-    private String parrain2;
+    @Column(name = "date_deces")
+    private LocalDate dateDeces;
 
     @Column(name = "description_metier")
     private String descriptionMetier;
 
     @Column(name = "adresse")
     private String adresse;
+
+    @Column(name = "created_by")
+    private Long createdBy;
 
     @ManyToOne
     @JoinColumn(name = "id_famille")

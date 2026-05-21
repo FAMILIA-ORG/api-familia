@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import com.example.familia.Famille.Famille;
+import com.example.familia.Personne.Personne;
 
 @Entity
 @Table(name = "patrimoine")
@@ -33,4 +34,11 @@ public class Patrimoine {
     @ManyToOne
     @JoinColumn(name = "id_famille")
     private Famille famille;
+
+    @ManyToOne
+    @JoinColumn(name = "id_personne_proprietaire")
+    private Personne proprietaire;
+
+    @Column(name = "created_by")
+    private Long createdBy;
 }

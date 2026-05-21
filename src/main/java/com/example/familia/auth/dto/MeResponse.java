@@ -1,11 +1,13 @@
 package com.example.familia.auth.dto;
 
+import com.example.familia.Personne.Personne;
+
 public record MeResponse(
-        Long id,
+        Long idUser,
         String email,
         String username,
         String role,
-        boolean active,
-        Long personneId
+        Boolean active,
+        Personne personne
 ) {}
 

@@ -3,6 +3,8 @@ package com.example.familia.Commentaire;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import com.example.familia.Commentaire.CommentaireRequest;
+import com.example.familia.Commentaire.CommentaireService;
 
 @RestController
 @RequestMapping("/api/commentaires")
@@ -21,7 +23,7 @@ public class CommentaireController {
     }
 
     @PostMapping
-    public Commentaire createCommentaire(@RequestBody Commentaire commentaire){
+    public Commentaire createCommentaire(@RequestBody CommentaireRequest commentaire){
         return commentaireService.createCommentaire(commentaire);
     }
 

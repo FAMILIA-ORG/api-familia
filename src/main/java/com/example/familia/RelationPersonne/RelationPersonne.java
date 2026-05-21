@@ -5,7 +5,10 @@ import jakarta.persistence.*;
 import com.example.familia.Personne.Personne;
 
 @Entity
-@Table(name = "relation_personne")
+@Table(
+    name = "relation_personne",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"id_personne_source", "id_personne_cible", "type_relation"})
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,8 +20,9 @@ public class RelationPersonne {
     @Column(name = "id_relation")
     private Long idRelation;
 
-    @Column(name = "libelle_relation")
-    private String libelleRelation;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type_relation", nullable = false)
+    private TypeRelation typeRelation;
 
     @ManyToOne
     @JoinColumn(name = "id_personne_source")
@@ -27,4 +31,7 @@ public class RelationPersonne {
     @ManyToOne
     @JoinColumn(name = "id_personne_cible")
     private Personne personneCible;
+
+    @Column(name = "created_by")
+    private Long createdBy;
 }

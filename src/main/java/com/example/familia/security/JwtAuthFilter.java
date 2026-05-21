@@ -39,9 +39,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 || path.equals("/api/auth/reset-password")
                 || path.startsWith("/avatars/")
                 || path.startsWith("/v3/api-docs")
-                || path.startsWith("/swagger-ui")
+                || path.startsWith("/swagger-ui/")
                 || path.equals("/swagger-ui.html")
-                || request.getMethod().equalsIgnoreCase("GET")
+                // || request.getMethod().equalsIgnoreCase("GET")
                 || request.getMethod().equalsIgnoreCase("OPTIONS");
     }
 
@@ -54,7 +54,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (header == null || !header.startsWith("Bearer")) {
+        if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }

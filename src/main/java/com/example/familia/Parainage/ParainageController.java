@@ -29,13 +29,13 @@ public class ParainageController {
     }
 
     @PostMapping
-    public Parainage createParainage(@RequestBody Parainage parainage) {
-        return parainageService.createParainage(parainage);
+    public Parainage createParainage(@RequestBody ParainageRequest request) {
+        return parainageService.createParainage(request);
     }
 
     @PutMapping("/{id}")
-    public Parainage updateParainage(@PathVariable Long id, @RequestBody Parainage parainage) {
-        return parainageService.updateParainage(id, parainage);
+    public Parainage updateParainage(@PathVariable Long id, @RequestBody ParainageRequest request) {
+        return parainageService.updateParainage(id, request);
     }
 
     @DeleteMapping("/{id}")

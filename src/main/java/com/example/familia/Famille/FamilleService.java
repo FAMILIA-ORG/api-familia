@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.familia.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class FamilleService {
 
     private final FamilleRepository familleRepository;
+    private final SecurityUtils securityUtils;
 
     public List<Famille> getAllFamilies() {
         return familleRepository.findAll();
@@ -23,6 +25,7 @@ public class FamilleService {
     }
 
     public Famille createFamille(Famille famille) {
+        famille.setCreatedBy(securityUtils.getCurrentUserId());
         return familleRepository.save(famille);
     }
 
@@ -35,6 +38,7 @@ public class FamilleService {
         famille.setDateCreation(data.getDateCreation());
         famille.setOrigineGeographique(data.getOrigineGeographique());
         famille.setDescription(data.getDescription());
+        famille.setPersonneFondatrice(data.getPersonneFondatrice());
         return familleRepository.save(famille);
     }
 

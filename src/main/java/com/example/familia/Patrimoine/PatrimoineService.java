@@ -3,6 +3,7 @@ package com.example.familia.Patrimoine;
 import org.springframework.stereotype.Service;
 import com.example.familia.Patrimoine.Patrimoine;
 import com.example.familia.Patrimoine.PatrimoineRepository;
+import com.example.familia.security.SecurityUtils;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PatrimoineService { 
     private final PatrimoineRepository patrimoineRepository;
+    private final SecurityUtils securityUtils;
 
     public List<Patrimoine> getAllPatrimoines(){
         return patrimoineRepository.findAll();
@@ -20,6 +22,7 @@ public class PatrimoineService {
     }
 
     public Patrimoine createPatrimoine(Patrimoine patrimoine){
+        patrimoine.setCreatedBy(securityUtils.getCurrentUserId());
         return patrimoineRepository.save(patrimoine);
     }
 
@@ -31,6 +34,7 @@ public class PatrimoineService {
         patrimoine.setModeAcquisition(data.getModeAcquisition());
         patrimoine.setStatut(data.getStatut());
         patrimoine.setFamille(data.getFamille());
+        patrimoine.setProprietaire(data.getProprietaire());
 
         return patrimoineRepository.save(patrimoine);
     }

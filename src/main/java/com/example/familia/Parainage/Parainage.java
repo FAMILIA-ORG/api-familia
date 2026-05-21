@@ -27,13 +27,14 @@ public class Parainage {
     @Column(name = "id_parainage")
     private Long idParainage;
 
-    /** Personne qui parraine (parrain / marraine). */
     @ManyToOne
     @JoinColumn(name = "id_parrain", nullable = false)
     private Personne parrain;
 
-    /** Personne parrainée (filleul / filleule). */
     @ManyToOne
     @JoinColumn(name = "id_filleul", nullable = false)
     private Personne filleul;
+
+    @Column(name = "created_by")
+    private Long createdBy;
 }

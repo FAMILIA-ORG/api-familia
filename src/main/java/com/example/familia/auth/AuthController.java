@@ -70,7 +70,7 @@ public class AuthController {
                 user.getUsername(),
                 user.getRole(),
                 user.isActive(),
-                user.getPersonne() == null ? null : user.getPersonne().getIdPersonne()
+                user.getPersonne()
         );
     }
 }

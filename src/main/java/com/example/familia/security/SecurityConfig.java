@@ -41,13 +41,16 @@ public class SecurityConfig {
                             "/api/auth/forgot-password",
                             "/api/auth/reset-password",
                             "/v3/api-docs/**",
+                            "/v3/api-docs",
                             "/swagger-ui/**",
-                            "/swagger-ui.html"
+                            "/swagger-ui.html",
+                            "/error"
                         ).permitAll()
                     
                         .requestMatchers("/api/auth/me").authenticated()
                     
                         .requestMatchers(HttpMethod.GET, "/avatars/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                     
                         .requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")

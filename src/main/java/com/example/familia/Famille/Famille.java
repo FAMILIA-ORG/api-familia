@@ -1,5 +1,6 @@
 package com.example.familia.Famille;
 
+import com.example.familia.Personne.Personne;
 import lombok.*;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -29,5 +30,12 @@ public class Famille {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "id_personne_fondatrice")
+    private Personne personneFondatrice;
+
+    @Column(name = "created_by")
+    private Long createdBy;
 
 }

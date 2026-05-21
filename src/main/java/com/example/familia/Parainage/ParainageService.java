@@ -2,6 +2,7 @@ package com.example.familia.Parainage;
 
 import com.example.familia.Personne.Personne;
 import com.example.familia.Personne.PersonneRepository;
+import com.example.familia.security.SecurityUtils;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ public class ParainageService {
 
     private final ParainageRepository parainageRepository;
     private final PersonneRepository personneRepository;
+    private final SecurityUtils securityUtils;
 
     public List<Parainage> getAllParainages() {
         return parainageRepository.findAll();
@@ -23,30 +25,23 @@ public class ParainageService {
         return parainageRepository.findById(id).orElse(null);
     }
 
-    public Parainage createParainage(Parainage data) {
-        Personne parrain = resolvePersonne(data.getParrain());
-        Personne filleul = resolvePersonne(data.getFilleul());
-        if (parrain == null || filleul == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parrain et filleul requis");
-        }
+    public Parainage createParainage(ParainageRequest request) {
+        Personne parrain = resolvePersonneById(request.getIdParrain());
+        Personne filleul = resolvePersonneById(request.getIdFilleul());
         Parainage p = new Parainage();
         p.setParrain(parrain);
         p.setFilleul(filleul);
+        p.setCreatedBy(securityUtils.getCurrentUserId());
         return parainageRepository.save(p);
     }
 
-    public Parainage updateParainage(Long id, Parainage data) {
+    public Parainage updateParainage(Long id, ParainageRequest request) {
         Parainage parainage = getParainageById(id);
         if (parainage == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Parainage introuvable");
         }
-        Personne parrain = resolvePersonne(data.getParrain());
-        Personne filleul = resolvePersonne(data.getFilleul());
-        if (parrain == null || filleul == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parrain et filleul requis");
-        }
-        parainage.setParrain(parrain);
-        parainage.setFilleul(filleul);
+        parainage.setParrain(resolvePersonneById(request.getIdParrain()));
+        parainage.setFilleul(resolvePersonneById(request.getIdFilleul()));
         return parainageRepository.save(parainage);
     }
 
@@ -54,10 +49,11 @@ public class ParainageService {
         parainageRepository.deleteById(id);
     }
 
-    private Personne resolvePersonne(Personne ref) {
-        if (ref == null || ref.getIdPersonne() == null) {
-            return null;
+    private Personne resolvePersonneById(Long id) {
+        if (id == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "idParrain et idFilleul requis");
         }
-        return personneRepository.getReferenceById(ref.getIdPersonne());
+        return personneRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Personne introuvable : " + id));
     }
 }

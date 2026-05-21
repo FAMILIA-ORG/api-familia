@@ -28,7 +28,8 @@ public class Commentaire {
     @JoinColumn(name="id_user")
     private AppUser user;
 
-
+    @Column(name="created_by")
+    private Long createdBy;
 
 }
 

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.example.familia.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 public class PersonneService {
 
     private final PersonneRepository personneRepository;
+    private final SecurityUtils securityUtils;
 
     public List<Personne> getAllPersonnes() {
         return personneRepository.findAll();
@@ -31,13 +33,16 @@ public class PersonneService {
     }
 
     public Personne createPersonne(Personne personne) {
+        personne.setCreatedBy(securityUtils.getCurrentUserId());
         return personneRepository.save(personne);
     }
 
     public Personne updatePersonne(Long id, Personne data) {
         Personne personne = requirePersonneById(id);
+        personne.setNom(data.getNom());
         personne.setPrenom(data.getPrenom());
         personne.setDateNaissance(data.getDateNaissance());
+        personne.setDateDeces(data.getDateDeces());
         personne.setLieuDeNaissance(data.getLieuDeNaissance());
         personne.setSexe(data.getSexe());
         personne.setPhoto(data.getPhoto());
@@ -45,8 +50,6 @@ public class PersonneService {
         personne.setNationalite(data.getNationalite());
         personne.setGeneration(data.getGeneration());
         personne.setMetier(data.getMetier());
-        personne.setParrain1(data.getParrain1());
-        personne.setParrain2(data.getParrain2());
         personne.setDescriptionMetier(data.getDescriptionMetier());
         personne.setAdresse(data.getAdresse());
         personne.setFamille(data.getFamille());
