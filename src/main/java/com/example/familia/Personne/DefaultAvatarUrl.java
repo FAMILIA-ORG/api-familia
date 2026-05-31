@@ -3,8 +3,10 @@ package com.example.familia.Personne;
 
 public final class DefaultAvatarUrl {
 
-    public static final String MALE = "/avatars/default-male.png";
-    public static final String FEMALE = "/avatars/default-female.png";
+    private static String baseUrl = "http://localhost:8080";
+
+    public static final String MALE = baseUrl + "/avatars/default-male.png";
+    public static final String FEMALE = baseUrl + "/avatars/default-female.png";
 
     private DefaultAvatarUrl() {
     }

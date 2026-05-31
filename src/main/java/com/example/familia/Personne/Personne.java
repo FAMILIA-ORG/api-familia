@@ -36,6 +36,7 @@ public class Personne {
     @Column(name = "sexe")
     private String sexe;
 
+    @Getter(lombok.AccessLevel.NONE)
     @Column(name = "photo")
     private String photo;
 

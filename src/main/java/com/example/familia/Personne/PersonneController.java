@@ -37,13 +37,13 @@ public class PersonneController {
     }
 
     @PostMapping
-    public Personne create(@RequestBody Personne personne) {
-        return personneService.createPersonne(personne);
+    public Personne create(@RequestBody PersonneRequest request) {
+        return personneService.createPersonne(request);
     }
 
     @PutMapping("/{id}")
-    public Personne updatePersonne(@PathVariable Long id, @RequestBody Personne personne) {
-        return personneService.updatePersonne(id, personne);
+    public Personne updatePersonne(@PathVariable Long id, @RequestBody PersonneRequest request) {
+        return personneService.updatePersonne(id, request);
     }
 
     @DeleteMapping("/{id}")
