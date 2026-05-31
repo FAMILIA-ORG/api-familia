@@ -81,5 +81,4 @@ public class Personne {
         }
         return DefaultAvatarUrl.forSexe(sexe);
     }
-    
 }
