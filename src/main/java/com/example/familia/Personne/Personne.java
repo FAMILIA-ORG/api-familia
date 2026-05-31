@@ -74,7 +74,6 @@ public class Personne {
             joinColumns = @JoinColumn(name = "id_personne"),
             inverseJoinColumns = @JoinColumn(name = "id_interet"))
     private Set<Interet> interets = new HashSet<>();
-
     public String getPhoto() {
         if (photo != null && !photo.isBlank()) {
             return photo;
