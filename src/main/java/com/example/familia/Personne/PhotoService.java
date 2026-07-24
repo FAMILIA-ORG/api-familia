@@ -21,9 +21,6 @@ public class PhotoService {
     @Value("${app.upload.dir}")
     private String uploadDir;
 
-    @Value("${app.base-url}")
-    private String baseUrl;
-
     private final PersonneRepository personneRepository;
 
     public Personne uploadPhoto(Long id, MultipartFile file) {
@@ -44,7 +41,7 @@ public class PhotoService {
 
             Files.copy(file.getInputStream(), dest, StandardCopyOption.REPLACE_EXISTING);
 
-            personne.setPhoto(baseUrl + "/uploads/personnes/" + filename);
+            personne.setPhoto("/uploads/personnes/" + filename);
             return personneRepository.save(personne);
 
         } catch (IOException e) {
@@ -83,7 +80,7 @@ public class PhotoService {
         if (photoUrl == null || photoUrl.isBlank()) return;
         if (photoUrl.startsWith("/avatars/")) return;
         try {
-            String prefix = baseUrl + "/uploads/personnes/";
+            String prefix = "/uploads/personnes/";
             if (photoUrl.startsWith(prefix)) {
                 String filename = photoUrl.substring(prefix.length());
                 Path old = Paths.get(uploadDir, filename);
