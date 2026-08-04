@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     private final AppUserRepository appUserRepository;
     private final PersonneRepository personneRepository;
     private final VerificationTokenRepository verificationTokenRepository;
@@ -74,10 +78,23 @@ public class AuthService {
         verificationTokenRepository.save(vt);
 
         String activationLink = baseUrl + "/activation?token=" + token;
-        mailService.send(
-                user.getEmail(),
-                "Activation de votre compte",
-                "Bienvenue.\n\nCliquez pour activer votre compte:\n" + activationLink + "\n\nCe lien expire dans 24h.");
+
+        // Send the activation email asynchronously so that a slow/unreachable
+        // mail provider (e.g. SendGrid connectivity issues) cannot cause the
+        // registration request to fail with a 500 error.
+        String userEmail = user.getEmail();
+        new Thread(() -> {
+            try {
+                mailService.send(
+                        userEmail,
+                        "Activation de votre compte",
+                        "Bienvenue.\n\nCliquez pour activer votre compte:\n" + activationLink
+                                + "\n\nCe lien expire dans 24h.");
+            } catch (Exception e) {
+                logger.error("Failed to send activation email for user: " + userEmail, e);
+                // Don't rethrow - email failure should not crash registration
+            }
+        }).start();
     }
 
     @Transactional
