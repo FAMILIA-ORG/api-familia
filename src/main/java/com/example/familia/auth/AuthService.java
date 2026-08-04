@@ -79,22 +79,11 @@ public class AuthService {
 
         String activationLink = baseUrl + "/activation?token=" + token;
 
-        // Send the activation email asynchronously so that a slow/unreachable
-        // mail provider (e.g. SendGrid connectivity issues) cannot cause the
-        // registration request to fail with a 500 error.
-        String userEmail = user.getEmail();
-        new Thread(() -> {
-            try {
-                mailService.send(
-                        userEmail,
-                        "Activation de votre compte",
-                        "Bienvenue.\n\nCliquez pour activer votre compte:\n" + activationLink
-                                + "\n\nCe lien expire dans 24h.");
-            } catch (Exception e) {
-                logger.error("Failed to send activation email for user: " + userEmail, e);
-                // Don't rethrow - email failure should not crash registration
-            }
-        }).start();
+        mailService.send(
+                user.getEmail(),
+                "Activation de votre compte",
+                "Bienvenue.\n\nCliquez pour activer votre compte:\n" + activationLink
+                        + "\n\nCe lien expire dans 24h.");
     }
 
     @Transactional
