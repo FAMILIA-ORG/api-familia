@@ -69,7 +69,7 @@ public class AuthController {
                 user.getEmail(),
                 user.getUsername(),
                 user.getRole(),
-                user.isActive(),
+                user.getIsActive() != null && user.getIsActive() == 1,
                 user.getPersonne()
         );
     }

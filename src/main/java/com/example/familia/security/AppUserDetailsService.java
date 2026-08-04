@@ -31,7 +31,7 @@ public class AppUserDetailsService implements UserDetailsService {
                 .username(user.getEmail())
                 .password(user.getPassword())
                 .authorities(List.of(new SimpleGrantedAuthority("ROLE_" + role)))
-                .disabled(!user.isActive())
+                .disabled(user.getIsActive() == null || user.getIsActive() != 1)
                 .build();
     }
 }

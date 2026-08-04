@@ -64,7 +64,7 @@ public class AuthService {
         user.setUsername(req.getUsername());
         user.setRole("USER");
         user.setPassword(passwordEncoder.encode(req.getPassword()));
-        user.setActive(false);
+        user.setIsActive(0);
         user.setPersonne(personne);
         user = appUserRepository.save(user);
 
@@ -110,7 +110,7 @@ public class AuthService {
         }
 
         AppUser user = vt.getUser();
-        user.setActive(true);
+        user.setIsActive(1);
         appUserRepository.save(user);
 
         vt.setUsedAt(Instant.now());

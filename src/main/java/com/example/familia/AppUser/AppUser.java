@@ -32,7 +32,7 @@ public class AppUser {
     private String password;
 
     @Column(name = "is_active")
-    private boolean isActive = false;
+    private Integer isActive = 0;
 
     @OneToOne
     @JoinColumn(name = "id_personne")
