@@ -64,7 +64,7 @@ public class AuthService {
         user.setUsername(req.getUsername());
         user.setRole("USER");
         user.setPassword(passwordEncoder.encode(req.getPassword()));
-        user.setActive(false);
+        user.setActive(true);  // Auto-activate so users can login immediately
         user.setPersonne(personne);
         user = appUserRepository.save(user);
 
