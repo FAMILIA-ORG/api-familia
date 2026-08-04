@@ -27,7 +27,7 @@ public class AppUserService {
         user.setUsername(data.getUsername());
         user.setPassword(data.getPassword());
         user.setEmail(data.getEmail());
-        user.setActive(data.isActive());
+        user.setIsActive(data.getIsActive());
         user.setPersonne(data.getPersonne());
 
         return userRepository.save(user);

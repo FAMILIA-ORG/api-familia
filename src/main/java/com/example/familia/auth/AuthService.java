@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,6 +30,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
     private final AppUserRepository appUserRepository;
     private final PersonneRepository personneRepository;
     private final VerificationTokenRepository verificationTokenRepository;
@@ -60,7 +64,7 @@ public class AuthService {
         user.setUsername(req.getUsername());
         user.setRole("USER");
         user.setPassword(passwordEncoder.encode(req.getPassword()));
-        user.setActive(false);
+        user.setIsActive(0);
         user.setPersonne(personne);
         user = appUserRepository.save(user);
 
@@ -74,10 +78,14 @@ public class AuthService {
         verificationTokenRepository.save(vt);
 
         String activationLink = baseUrl + "/activation?token=" + token;
+
+        // Send the activation email synchronously. Registration only succeeds
+        // once the activation email has been sent.
         mailService.send(
                 user.getEmail(),
                 "Activation de votre compte",
-                "Bienvenue.\n\nCliquez pour activer votre compte:\n" + activationLink + "\n\nCe lien expire dans 24h.");
+                "Bienvenue.\n\nCliquez pour activer votre compte:\n" + activationLink
+                        + "\n\nCe lien expire dans 24h.");
     }
 
     @Transactional
@@ -93,7 +101,7 @@ public class AuthService {
         }
 
         AppUser user = vt.getUser();
-        user.setActive(true);
+        user.setIsActive(1);
         appUserRepository.save(user);
 
         vt.setUsedAt(Instant.now());
