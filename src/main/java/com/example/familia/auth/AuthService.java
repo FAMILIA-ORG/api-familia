@@ -149,11 +149,11 @@ public class AuthService {
                                             <p style="color:#333333;font-size:16px;line-height:1.6;margin:0 0 15px;">Bonjour {prenom},</p>
                                             <p style="color:#333333;font-size:16px;line-height:1.6;margin:0 0 25px;">Merci pour votre inscription. Pour finaliser la création de votre compte, veuillez cliquer sur le bouton ci-dessous.</p>
                                             <p style="text-align:center;margin:30px 0;">
-                                                <a href="{link}" style="display:inline-block;padding:14px 28px;background:#007bff;color:#ffffff;text-decoration:none;border-radius:5px;font-weight:600;font-size:16px;">Activer mon compte</a>
+                                                <a href="{link}" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:14px 28px;background:#007bff;color:#ffffff;text-decoration:none;border-radius:5px;font-weight:600;font-size:16px;">Activer mon compte</a>
                                             </p>
                                             <p style="color:#666666;font-size:14px;line-height:1.6;margin:0 0 15px;">Ce lien est valable 24 heures. Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet e-mail.</p>
                                             <p style="color:#888888;font-size:13px;line-height:1.5;margin:0;">Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :<br>
-                                                <a href="{link}" style="color:#007bff;text-decoration:underline;">{link}</a>
+                                                <a href="{link}" target="_blank" rel="noopener noreferrer" style="color:#007bff;text-decoration:underline;">{link}</a>
                                             </p>
                                         </td>
                                     </tr>
